@@ -10,9 +10,12 @@ export interface SessionData {
 }
 
 export function createSessionToken(email: string): string {
+  // Use a stable timestamp to avoid hydration issues
+  const issuedAt = Math.floor(Date.now() / 1000) * 1000 // Round to nearest second
+  
   const payload: SessionData = {
     email,
-    issuedAt: Date.now()
+    issuedAt
   }
   
   // 10 years expiry for lifetime access
@@ -53,11 +56,14 @@ export function getSessionFromCookies(): SessionData | null {
 }
 
 export function createMagicToken(email: string, productId: string): string {
+  // Use stable timestamp for consistent token generation
+  const now = Math.floor(Date.now() / 1000)
+  
   const payload = {
     email,
     productId,
     type: 'magic',
-    exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // 24h expiry
+    exp: now + (24 * 60 * 60) // 24h expiry
   }
   
   return jwt.sign(payload, JWT_SECRET)
