@@ -25,8 +25,8 @@ async def create_lead(lead_data: LeadCreate):
     
     if not existing_user:
         # Create user account automatically
-        # Generate a temporary password (user will need to set a real one later)
-        temp_password = str(uuid.uuid4())[:8]
+        # Generate a shorter temporary password 
+        temp_password = str(uuid.uuid4())[:6]  # Shorter password
         hashed_password = get_password_hash(temp_password)
         
         user_dict = {
