@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import Navigation from '../components/Navigation';
-import { submitLead } from '../mock/mockData';
+import { leadsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Download, Leaf, ArrowRight } from 'lucide-react';
 
