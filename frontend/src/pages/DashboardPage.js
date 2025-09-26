@@ -10,12 +10,31 @@ import { Download, Play, Book, FileText, Gift, User, ShoppingBag } from 'lucide-
 const DashboardPage = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const [userProducts, setUserProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
       navigate('/connexion');
     }
   }, [user, loading, navigate]);
+
+  useEffect(() => {
+    const fetchUserProducts = async () => {
+      if (user) {
+        try {
+          const products = await productsAPI.getUserProducts();
+          setUserProducts(products);
+        } catch (error) {
+          console.error('Erreur lors du chargement des produits:', error);
+        } finally {
+          setLoadingProducts(false);
+        }
+      }
+    };
+
+    fetchUserProducts();
+  }, [user]);
 
   if (loading) {
     return (
