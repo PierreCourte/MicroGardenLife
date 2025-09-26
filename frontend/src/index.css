@@ -4,9 +4,7 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
+    font-family: system-ui, sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -15,8 +13,6 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
-
-
 
 @layer base {
   :root {
@@ -45,6 +41,31 @@ code {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+
+        /* MicroGardenLife Brand Colors */
+        --brand-green: #1A4D2E;
+        --brand-cream: #F5F1E8;
+        --brand-anthracite: #1C1C1C;
+        --brand-yellow: #E6B800;
+        
+        /* Green-AI Design System */
+        --bg-page: #FFFFFF;
+        --bg-card: #FFFFFF;
+        --bg-section: rgba(0, 0, 0, 0.02);
+        
+        --text-primary: #1A4D2E;
+        --text-body: #1C1C1C;
+        --text-secondary: rgb(131, 146, 140);
+        --text-muted: rgb(175, 183, 180);
+        
+        --border-light: rgba(0, 0, 0, 0.1);
+        --border-medium: rgba(0, 0, 0, 0.2);
+        --border-strong: rgba(0, 0, 0, 0.3);
+        
+        --accent-primary: #1A4D2E;
+        --accent-strong: #154025;
+        --accent-text: #1A4D2E;
+        --accent-wash: rgba(26, 77, 46, 0.1);
     }
   .dark {
         --background: 0 0% 3.9%;
@@ -74,8 +95,6 @@ code {
     }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -83,4 +102,163 @@ code {
   body {
     @apply bg-background text-foreground;
     }
+}
+
+/* Typography System */
+.heading-1 { 
+  font-family: system-ui, sans-serif; 
+  font-weight: 700; 
+  font-size: clamp(2.25rem, 5vw, 4.5rem); 
+  line-height: 0.9; 
+  letter-spacing: -0.02em; 
+  color: var(--text-primary);
+}
+.heading-2 { 
+  font-family: system-ui, sans-serif; 
+  font-weight: 600; 
+  font-size: clamp(1.875rem, 4vw, 3rem); 
+  line-height: 0.95; 
+  letter-spacing: -0.015em; 
+  color: var(--text-primary);
+}
+.heading-3 { 
+  font-family: system-ui, sans-serif; 
+  font-weight: 600; 
+  font-size: clamp(1.25rem, 3vw, 1.5rem); 
+  line-height: 1.2; 
+  letter-spacing: -0.01em; 
+  color: var(--text-primary);
+}
+
+.body-large { 
+  font-family: system-ui, sans-serif; 
+  font-weight: 400; 
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem); 
+  line-height: 1.6; 
+  color: var(--text-body); 
+}
+.body-medium { 
+  font-family: system-ui, sans-serif; 
+  font-weight: 400; 
+  font-size: clamp(1rem, 2vw, 1.125rem); 
+  line-height: 1.5; 
+  color: var(--text-body); 
+}
+
+/* Button Styles */
+.btn-primary {
+  background: var(--brand-green);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 24px;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  transform: scale(1.02);
+  box-shadow: 0px 4px 8px rgba(26, 77, 46, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 9999px;
+  padding: 14px 24px;
+  font-family: system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--border-medium);
+}
+
+/* Hero Section */
+.hero-gradient {
+  background: radial-gradient(at 53% 78%, rgba(245, 241, 232, 0.4) 0px, transparent 50%), 
+              radial-gradient(at 71% 91%, rgba(26, 77, 46, 0.1) 0px, transparent 50%), 
+              radial-gradient(at 31% 91%, rgba(230, 184, 0, 0.1) 0px, transparent 50%);
+}
+
+/* Cards */
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--border-medium);
+}
+
+/* Navigation */
+.nav-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  height: 3.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 0.5px solid var(--border-light);
+  border-radius: 9999px;
+  margin: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .nav-header {
+    margin: 0.5rem;
+    border-radius: 12px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    min-height: 52px;
+  }
 }
