@@ -1,103 +1,214 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Layout from '@/components/Layout'
+import FormInput from '@/components/FormInput'
+import LoadingButton from '@/components/LoadingButton'
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function LeadMagnetPage() {
+  const [formData, setFormData] = useState({
+    email: '',
+    firstName: '',
+    consent: false
+  })
+  const [loading, setLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+  
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!formData.consent) {
+      setError('Veuillez accepter la politique de confidentialité')
+      return
+    }
+    
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          firstName: formData.firstName,
+          source: 'lead-magnet'
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'envoi')
+      }
+
+      setSubmitted(true)
+      
+      // Auto-redirect to book page after success
+      setTimeout(() => {
+        router.push('/book')
+      }, 2000)
+      
+    } catch (err) {
+      setError('Erreur lors de l\'envoi. Veuillez réessayer.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (submitted) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center px-4">
+          <div className="text-center max-w-md mx-auto">
+            <div className="text-6xl mb-6">🌱</div>
+            <h2 className="text-2xl font-mont font-bold text-brand-green mb-4">
+              C'est parti !
+            </h2>
+            <p className="text-brand-anthracite mb-6">
+              Vérifie ta boîte mail, ton guide t'attend. 
+              Redirection vers notre livre premium...
+            </p>
+            <div className="loading-spinner mx-auto"></div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </Layout>
+    )
+  }
+
+  return (
+    <Layout>
+      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-lg">
+          {/* Hero Section */}
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-6">🌱</div>
+            <h1 className="text-4xl md:text-5xl font-mont font-bold text-brand-green mb-6 leading-tight">
+              Transforme ton appart en mini-jardin nourricier
+            </h1>
+            <p className="text-lg text-brand-anthracite mb-8 leading-relaxed">
+              Télécharge gratuitement le guide express en 
+              <strong> 6 étapes pour cultiver tes micro-pousses</strong> à la maison.
+            </p>
+          </div>
+
+          {/* Lead Capture Form */}
+          <div className="card">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📥</span>
+              </div>
+              <h3 className="text-xl font-mont font-semibold text-brand-anthracite">
+                Guide Gratuit
+              </h3>
+              <p className="text-sm text-gray-600">
+                PDF prêt en 2 minutes dans ta boîte mail
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <FormInput
+                type="text"
+                placeholder="Ton prénom (optionnel)"
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+              />
+              
+              <FormInput
+                type="email"
+                placeholder="ton@email.com"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+
+              {/* GDPR Consent */}
+              <div className="flex items-start space-x-3">
+                <input
+                  type="checkbox"
+                  id="consent"
+                  checked={formData.consent}
+                  onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+                  className="mt-1"
+                  required
+                />
+                <label htmlFor="consent" className="text-sm text-brand-anthracite">
+                  En téléchargeant, j'accepte de recevoir des conseils par email et la{' '}
+                  <a 
+                    href="/legal/privacy" 
+                    className="text-brand-green underline hover:no-underline"
+                    target="_blank"
+                  >
+                    politique de confidentialité
+                  </a>
+                  .
+                </label>
+              </div>
+
+              {error && (
+                <div className="alert alert-error">
+                  {error}
+                </div>
+              )}
+
+              <LoadingButton
+                type="submit"
+                loading={loading}
+                className="w-full text-lg"
+              >
+                Je reçois mon guide gratuit
+              </LoadingButton>
+            </form>
+
+            <p className="text-xs text-center text-gray-500 mt-4">
+              En téléchargeant, tu acceptes notre politique de confidentialité.
+            </p>
+          </div>
+
+          {/* Benefits */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-xl">⚡</span>
+              </div>
+              <h4 className="font-mont font-semibold text-brand-anthracite mb-2">
+                Résultats express
+              </h4>
+              <p className="text-sm text-gray-600">
+                Premières pousses en 7 jours seulement
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-12 h-12 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-xl">🏠</span>
+              </div>
+              <h4 className="font-mont font-semibold text-brand-anthracite mb-2">
+                Chez toi
+              </h4>
+              <p className="text-sm text-gray-600">
+                Même en appartement, zéro matériel pro
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-12 h-12 bg-brand-green/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-xl">💚</span>
+              </div>
+              <h4 className="font-mont font-semibold text-brand-anthracite mb-2">
+                100% naturel
+              </h4>
+              <p className="text-sm text-gray-600">
+                Sans pesticides, ultra-nutritif
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  )
 }
