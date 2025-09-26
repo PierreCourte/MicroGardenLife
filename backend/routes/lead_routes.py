@@ -4,7 +4,8 @@ from models.user import UserCreate
 from database import leads_collection, users_collection
 from auth import get_password_hash, create_access_token
 from datetime import datetime
-import uuid
+import secrets
+import string
 
 router = APIRouter(prefix="/leads", tags=["Leads"])
 
@@ -26,7 +27,7 @@ async def create_lead(lead_data: LeadCreate):
     if not existing_user:
         # Create user account automatically
         # Generate a shorter temporary password 
-        temp_password = str(uuid.uuid4())[:6]  # Shorter password
+        temp_password = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(6))  # Shorter password
         hashed_password = get_password_hash(temp_password)
         
         user_dict = {
