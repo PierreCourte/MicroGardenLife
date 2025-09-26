@@ -235,7 +235,7 @@ const BookLandingPage = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {mockTestimonials.map((testimonial) => (
+            {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="bg-white rounded-xl p-6 shadow-md">
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
