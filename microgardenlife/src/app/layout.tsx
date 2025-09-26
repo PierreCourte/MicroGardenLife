@@ -1,52 +1,20 @@
 import type { Metadata } from "next";
-import localFont from 'next/font/local'
+import { Montserrat, Lato } from "next/font/google";
 import "./globals.css";
 
-// Use local fonts to avoid hydration issues with Google Fonts
-const montserrat = localFont({
-  src: [
-    {
-      path: '../assets/fonts/Montserrat-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../assets/fonts/Montserrat-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../assets/fonts/Montserrat-SemiBold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../assets/fonts/Montserrat-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+// Use Google Fonts with display: swap to prevent hydration issues
+const montserrat = Montserrat({
+  subsets: ['latin'],
   variable: '--font-mont',
   display: 'swap',
-  fallback: ['system-ui', 'sans-serif']
+  weight: ['400', '500', '600', '700']
 })
 
-const lato = localFont({
-  src: [
-    {
-      path: '../assets/fonts/Lato-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../assets/fonts/Lato-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-  ],
+const lato = Lato({
+  subsets: ['latin'],
   variable: '--font-lato',
   display: 'swap',
-  fallback: ['system-ui', 'sans-serif']
+  weight: ['300', '400', '700']
 })
 
 export const metadata: Metadata = {
@@ -76,9 +44,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
       <body className={`${montserrat.variable} ${lato.variable} font-lato antialiased`} suppressHydrationWarning>
         {children}
       </body>
