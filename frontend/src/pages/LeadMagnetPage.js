@@ -19,6 +19,7 @@ const LeadMagnetPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       // Submit lead to API and create user account
@@ -29,12 +30,8 @@ const LeadMagnetPage = () => {
         localStorage.setItem('token', response.access_token);
         localStorage.setItem('user', JSON.stringify(response.user));
         
-        // Update auth context
-        await register({
-          name: response.user.name,
-          email: response.user.email,
-          products: response.user.products
-        });
+        // Manual trigger of auth context update - simpler approach
+        window.location.reload();
       }
 
       setSubmitted(true);
