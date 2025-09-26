@@ -36,7 +36,7 @@ const DashboardPage = () => {
     fetchUserProducts();
   }, [user]);
 
-  if (loading) {
+  if (loading || loadingProducts) {
     return (
       <div className="min-h-screen bg-brand-cream flex items-center justify-center">
         <div className="text-center">
@@ -50,8 +50,6 @@ const DashboardPage = () => {
   if (!user) {
     return null;
   }
-
-  const userProducts = user.products?.map(productId => mockProducts[productId]).filter(Boolean) || [];
 
   return (
     <div className="min-h-screen bg-brand-cream">
