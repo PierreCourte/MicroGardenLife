@@ -43,8 +43,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <body className={`${montserrat.variable} ${lato.variable} font-lato antialiased`} suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning className={`${montserrat.variable} ${lato.variable}`}>
+      <body className="font-lato antialiased bg-brand-cream text-brand-anthracite" suppressHydrationWarning>
         {children}
       </body>
     </html>
