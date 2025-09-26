@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Layout from '@/components/Layout'
 import LoadingButton from '@/components/LoadingButton'
 import FormInput from '@/components/FormInput'
+import ClientWrapper from '@/components/ClientWrapper'
 
 interface UserProduct {
   productId: string
@@ -51,10 +52,14 @@ export default function MyContentPage() {
         
         if (productId === 'video67') {
           // For video, open in same tab with player
-          window.location.href = `/player?url=${encodeURIComponent(data.url)}&watermark=${encodeURIComponent(data.watermark.text)}`
+          if (typeof window !== 'undefined') {
+            window.location.href = `/player?url=${encodeURIComponent(data.url)}&watermark=${encodeURIComponent(data.watermark.text)}`
+          }
         } else {
           // For PDFs, open in new tab
-          window.open(data.url, '_blank')
+          if (typeof window !== 'undefined') {
+            window.open(data.url, '_blank')
+          }
         }
       } else {
         alert('Erreur d\'accès au contenu')
@@ -174,12 +179,14 @@ export default function MyContentPage() {
                         {product.description}
                       </p>
                       
-                      <LoadingButton
-                        onClick={() => handleContentAccess(product.productId)}
-                        className="w-full"
-                      >
-                        {product.type === 'course' ? 'Regarder' : 'Télécharger'}
-                      </LoadingButton>
+                      <ClientWrapper>
+                        <LoadingButton
+                          onClick={() => handleContentAccess(product.productId)}
+                          className="w-full"
+                        >
+                          {product.type === 'course' ? 'Regarder' : 'Télécharger'}
+                        </LoadingButton>
+                      </ClientWrapper>
                     </div>
                   </div>
                 </div>

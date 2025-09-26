@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react'
 import Link from 'next/link'
+import ClientWrapper from './ClientWrapper'
 
 interface LayoutProps {
   children: ReactNode
@@ -105,7 +106,11 @@ export default function Layout({ children, showNav = false, className = '' }: La
           </div>
           
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 MicroGardenLife. Tous droits réservés.</p>
+            <ClientWrapper
+              fallback={<p>&copy; 2024 MicroGardenLife. Tous droits réservés.</p>}
+            >
+              <p suppressHydrationWarning>&copy; {new Date().getFullYear()} MicroGardenLife. Tous droits réservés.</p>
+            </ClientWrapper>
           </div>
         </div>
       </footer>

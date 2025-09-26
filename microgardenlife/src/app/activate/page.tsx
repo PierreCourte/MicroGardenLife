@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Layout from '@/components/Layout'
 
-export default function ActivatePage() {
+function ActivateContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [error, setError] = useState('')
   
@@ -23,6 +23,8 @@ export default function ActivatePage() {
   }, [token])
 
   const activateAccess = async () => {
+    if (!token) return
+
     try {
       const response = await fetch('/api/activate', {
         method: 'POST',
@@ -95,5 +97,19 @@ export default function ActivatePage() {
         </div>
       </div>
     </Layout>
+  )
+}
+
+export default function ActivatePage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="loading-spinner"></div>
+        </div>
+      </Layout>
+    }>
+      <ActivateContent />
+    </Suspense>
   )
 }
