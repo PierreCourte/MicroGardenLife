@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import Navigation from '../components/Navigation';
-import { mockPurchase, mockTestimonials } from '../mock/mockData';
+import { mockPurchase } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Book, Star, Check, Shield, ArrowRight, Leaf } from 'lucide-react';
 
