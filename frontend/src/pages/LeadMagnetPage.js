@@ -20,15 +20,21 @@ const LeadMagnetPage = () => {
     setLoading(true);
 
     try {
-      // Submit lead to mock API
-      await submitLead(formData);
+      // Submit lead to API and create user account
+      const response = await leadsAPI.createLead(formData);
       
-      // Create user account with free guide access
-      await register({
-        name: formData.name,
-        email: formData.email,
-        products: ['guide-gratuit']
-      });
+      // Store token and user data from response
+      if (response.access_token) {
+        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        
+        // Update auth context
+        await register({
+          name: response.user.name,
+          email: response.user.email,
+          products: response.user.products
+        });
+      }
 
       setSubmitted(true);
       
@@ -38,6 +44,7 @@ const LeadMagnetPage = () => {
       }, 2000);
     } catch (error) {
       console.error('Erreur lors de la soumission:', error);
+      setError('Erreur lors de l\'envoi. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
