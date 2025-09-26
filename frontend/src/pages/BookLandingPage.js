@@ -11,6 +11,28 @@ const BookLandingPage = () => {
   const navigate = useNavigate();
   const { user, addProduct } = useAuth();
 
+  // Témoignages statiques
+  const testimonials = [
+    {
+      id: 1,
+      name: 'Marie L.',
+      text: 'Grâce au guide, j\'ai réussi mes premières micro-pousses en seulement 7 jours ! Incroyable.',
+      rating: 5
+    },
+    {
+      id: 2,
+      name: 'Thomas B.',
+      text: 'Le livre est très bien fait, même en appartement c\'est possible. Mes enfants adorent !',
+      rating: 5
+    },
+    {
+      id: 3,
+      name: 'Sophie M.',
+      text: 'La formation vidéo m\'a vraiment aidée à comprendre toutes les étapes. Je recommande !',
+      rating: 5
+    }
+  ];
+
   const handlePurchase = async () => {
     setLoading(true);
     try {
