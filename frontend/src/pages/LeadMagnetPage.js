@@ -141,6 +141,12 @@ const LeadMagnetPage = () => {
                 />
               </div>
 
+              {error && (
+                <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg">
+                  {error}
+                </div>
+              )}
+
               <Button
                 type="submit"
                 disabled={loading}
