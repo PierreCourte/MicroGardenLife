@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button';
 import Navigation from '../components/Navigation';
 import { mockPurchase, mockTestimonials } from '../mock/mockData';
 import { useAuth } from '../context/AuthContext';
-import { Book, Star, Check, Shield, ArrowRight } from 'lucide-react';
+import { Book, Star, Check, Shield, ArrowRight, Leaf } from 'lucide-react';
 
 const BookLandingPage = () => {
   const [loading, setLoading] = useState(false);
