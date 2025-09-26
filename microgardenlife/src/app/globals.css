@@ -24,3 +24,24 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Custom component styles */
+.card {
+  @apply bg-white rounded-brand shadow-soft p-6 border border-gray-100;
+}
+
+.alert {
+  @apply p-3 rounded-lg text-sm font-medium;
+}
+
+.alert-error {
+  @apply bg-red-50 text-red-700 border border-red-200;
+}
+
+.alert-success {
+  @apply bg-green-50 text-green-700 border border-green-200;
+}
+
+.loading-spinner {
+  @apply w-6 h-6 border-2 border-brand-green border-t-transparent rounded-full animate-spin;
+}
