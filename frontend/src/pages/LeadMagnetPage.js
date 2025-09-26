@@ -12,6 +12,7 @@ const LeadMagnetPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { register } = useAuth();
 
